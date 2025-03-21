@@ -6,7 +6,9 @@ const AppContext = createContext({
   counter: 0,
   checbox: false,
   ip: '',
-  loading: false
+  loading: false,
+  user: null,
+  browserInfo: null,
 })
 
 export function AppContextProvider({children}) {
@@ -14,6 +16,18 @@ export function AppContextProvider({children}) {
   const [ipAddress, setIpAddress] = useState('');
   const [loading, setLoading] = useState(false)
   const {ip} = ipAddress;
+  const [user, setUser] = useState({
+    name: 'Alex',
+    email: 'alex@gmail.com',
+    job: 'Developer',
+  })
+  const [browserInfo, setBrowserInfo] = useState({
+    browser: navigator.userAgent,
+  })
+  
+  function changeUser(newUser) {
+    setUser(newUser)
+  }
 
   useEffect(() => {
     setLoading(true)
@@ -26,7 +40,7 @@ export function AppContextProvider({children}) {
   }, [])
   
   return (
-    <AppContext.Provider value={{ip, loading}}>
+    <AppContext.Provider value={{ip, loading, user, changeUser, browserInfo}}>
       {children}
     </AppContext.Provider>
   )
